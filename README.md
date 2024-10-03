@@ -1,9 +1,9 @@
 # hospital_management_system
 
-Done:
-Register/Login/Logout
-Todo:
-Create custom roles (patient, doctor) with permissions
-Make an appointment for patient
-Check patients for doctor
-...
+Done: <br/>
+Register/Login/Logout <br/>
+Todo: <br/>
+Create custom roles (patient, doctor) with permissions <br/>
+Make an appointment for patient <br/>
+Check patients for doctor <br/>
+... <br/>
