@@ -1,0 +1,7 @@
+<h1>Patient List</h1>
+<a href="{% url 'add_patient' %}">Add Patient</a>
+<ul>
+    {% for patient in patients %}
+        <li>{{ patient.first_name }} {{ patient.last_name }}</li>
+    {% endfor %}
+</ul>
