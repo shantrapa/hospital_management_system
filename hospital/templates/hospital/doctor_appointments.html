@@ -1,0 +1,16 @@
+{%  extends 'hospital/main.html' %}
+{% load static %}
+{% block content %}    
+    <h1>Manage Appointments</h1>
+    <ul>
+        {% for appointment in appointments %}
+            {% if appointment.doctor.user == user %}
+                <li>
+                    Patient: {{ appointment.patient.first_name }} {{ appointment.patient.last_name }} - 
+                    Date: {{ appointment.appointment_date }} - 
+                    Status: {{ appointment.status }}
+                </li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+{% endblock content %}

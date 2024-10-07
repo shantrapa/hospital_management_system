@@ -1,0 +1,23 @@
+{% extends 'hospital/main.html' %}
+{% load static %}
+{% block content %}    
+    <h1>Manage Appointments</h1>
+    <ul>
+        {% for appointment in appointments %}
+            <li>
+                {{ appointment.patient.first_name }} - {{ appointment.appointment_date }} - 
+                Status: {{ appointment.status }}
+                
+                <form method="POST" action="{% url 'update_appointment_status' appointment.id %}">
+                    {% csrf_token %}
+                    <select name="status">
+                        <option value="Pending" {% if appointment.status == "Pending" %}selected{% endif %}>Pending</option>
+                        <option value="Confirmed" {% if appointment.status == "Confirmed" %}selected{% endif %}>Confirmed</option>
+                        <option value="Completed" {% if appointment.status == "Completed" %}selected{% endif %}>Completed</option>
+                    </select>
+                    <button type="submit">Update Status</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock content %}

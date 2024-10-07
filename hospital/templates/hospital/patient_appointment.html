@@ -1,0 +1,47 @@
+{%  extends 'hospital/main.html' %}
+{% load static %}
+{% block content %}
+
+    <h1>Book an Appointment</h1>
+
+    <!-- Appointment Booking Form -->
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Book Appointment</button>
+    </form>
+
+    <!-- Doctor Information -->
+    <h2>Available Doctors and Time Slots</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Doctor Name</th>
+                <th>Specialization</th>
+                <th>Contact Info</th>
+                <th>Available Time Slots</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for doctor in doctors %}
+            <tr>
+                <td>{{ doctor.first_name }} {{ doctor.last_name }}</td>
+                <td>{{ doctor.specialization }}</td>
+                <td>{{ doctor.contact_number }} / {{ doctor.email }}</td>
+                <td>
+                    <!-- Assuming time slots are stored or calculated -->
+                    {% if doctor.time_slots %}
+                        <ul>
+                            {% for slot in doctor.time_slots %}
+                                <li>{{ slot }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        No available slots
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock content %}
