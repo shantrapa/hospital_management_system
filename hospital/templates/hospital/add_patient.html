@@ -1,30 +1,42 @@
 {% extends 'hospital/main.html' %}
+
+{% block title %}Manage Appointments{% endblock %}
+
 {% load static %}
-{% block content %}    
-    <h1>Manage Appointments</h1>
-    <ul>
-        {% for appointment in appointments %}
-            <li>
-                {{ appointment.patient.first_name }} - {{ appointment.appointment_date }} - 
-                Status: {{ appointment.status }}
-                
-                <form method="POST" action="{% url 'update_appointment_status' appointment.id %}">
-                    {% csrf_token %}
-                    <select name="status">
-                        <option value="Pending" {% if appointment.status == "Pending" %}selected{% endif %}>Pending</option>
-                        <option value="Confirmed" {% if appointment.status == "Confirmed" %}selected{% endif %}>Confirmed</option>
-                        <option value="Completed" {% if appointment.status == "Completed" %}selected{% endif %}>Completed</option>
-                    </select>
-                    <button type="submit">Update Status</button>
-                </form>              
-            </li> 
-        {% endfor %}
-    </ul>
-    {% if messages %}
-        <ul>
-            {% for message in messages %}
-                <li>{{ message }}</li>
+{% block content %}
+    <div class="container mt-4">
+        <h1 class="mb-4 text-center">Manage Appointments</h1>
+
+        <ul class="list-group">
+            {% for appointment in appointments %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                        <strong>{{ appointment.patient.first_name }}</strong> - 
+                        {{ appointment.appointment_date|date:"d M Y H:i" }} - 
+                        Status: <span class="badge badge-info">{{ appointment.status }}</span>
+                    </div>
+
+                    <form method="POST" action="{% url 'update_appointment_status' appointment.id %}" class="form-inline">
+                        {% csrf_token %}
+                        <select name="status" class="form-control mr-2">
+                            <option value="Pending" {% if appointment.status == "Pending" %}selected{% endif %}>Pending</option>
+                            <option value="Confirmed" {% if appointment.status == "Confirmed" %}selected{% endif %}>Confirmed</option>
+                            <option value="Completed" {% if appointment.status == "Completed" %}selected{% endif %}>Completed</option>
+                        </select>
+                        <button type="submit" class="btn btn-primary">Update Status</button>
+                    </form>
+                </li>
             {% endfor %}
         </ul>
-    {% endif %} 
-{% endblock content %}
+
+        {% if messages %}
+        <div class="mt-4">
+            <ul class="alert alert-info">
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+    </div>
+{% endblock %}

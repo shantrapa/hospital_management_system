@@ -42,3 +42,264 @@ ul {
 .contact-details p {
     margin: 5px 0;
 }
+
+.nav-link img {
+    margin-right: 5px;
+    vertical-align: middle;
+}
+
+/* General Styles for Reviews Page */
+.reviews-section {
+    margin: 30px auto;
+    max-width: 800px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Heading Styles */
+.reviews-section h1 {
+    font-size: 2.5em;
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+.reviews-section h2 {
+    font-size: 1.8em;
+    color: #444;
+    margin-bottom: 15px;
+}
+
+/* Form Styles */
+.reviews-section form {
+    margin-bottom: 30px;
+}
+
+.reviews-section form button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+.reviews-section form button:hover {
+    background-color: #45a049;
+}
+
+.reviews-section form input,
+.reviews-section form textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+/* Review List Styles */
+.reviews-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.reviews-section ul li {
+    background-color: #fff;
+    padding: 20px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.reviews-section ul li strong {
+    font-size: 1.1em;
+    color: #555;
+}
+
+.reviews-section ul li p {
+    font-size: 1em;
+    color: #666;
+    margin: 10px 0;
+}
+
+.reviews-section ul li small {
+    font-size: 0.8em;
+    color: #999;
+}
+
+/* Star Rating Styling */
+.reviews-section ul li .star-rating {
+    color: #f5c518;
+    margin-right: 10px;
+}
+
+/* Login Link Styling */
+.reviews-section a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.reviews-section a:hover {
+    text-decoration: underline;
+}
+
+.reviews-section h2 {
+    font-size: 1.8em;
+    color: #444;
+    margin-bottom: 15px;
+}
+
+.average-rating {
+    font-size: 2em;
+    color: #f5c518; /* Gold color for ratings */
+    margin-bottom: 20px;
+}
+
+.blog-list-container {
+    padding: 20px;
+    max-width: 800px;
+    margin: auto;
+}
+
+.create-post-btn {
+    display: inline-block;
+    margin-bottom: 20px;
+    padding: 10px 15px;
+    background-color: #28a745;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.create-post-btn:hover {
+    background-color: #218838;
+}
+
+.blog-list {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.blog-item {
+    border-bottom: 1px solid #ddd;
+    padding: 15px 0;
+}
+
+.blog-title {
+    text-decoration: none;
+    color: #007bff;
+    font-size: 1.5em;
+}
+
+.blog-title:hover {
+    color: #0056b3;
+}
+
+.blog-meta {
+    color: #6c757d;
+    margin-bottom: 10px;
+}
+
+.blog-excerpt {
+    font-size: 1.1em;
+    color: #333;
+}
+
+.blog-detail-container {
+    padding: 20px;
+    max-width: 800px;
+    margin: auto;
+}
+
+.post-title {
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+
+.post-meta {
+    color: #6c757d;
+    margin-bottom: 20px;
+}
+
+.post-content {
+    font-size: 1.2em;
+    margin-bottom: 30px;
+}
+
+.comments-section {
+    margin-top: 40px;
+}
+
+.comments-section h2 {
+    font-size: 1.5em;
+}
+
+.comments-list {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.comment-item {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.comment-item strong {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.comment-form {
+    margin-top: 30px;
+}
+
+.submit-comment-btn {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.submit-comment-btn:hover {
+    background-color: #0056b3;
+}
+
+.new-post-container {
+    padding: 20px;
+    max-width: 600px;
+    margin: auto;
+}
+
+.new-post-container h1 {
+    margin-bottom: 20px;
+    font-size: 2em;
+}
+
+.new-post-container form {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.submit-post-btn {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.submit-post-btn:hover {
+    background-color: #218838;
+}

@@ -1,0 +1,12 @@
+{% extends 'hospital/main.html' %}
+{% load static %}
+{% block content %}
+<div class="new-post-container">
+    <h1>Create New Post</h1>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="submit-post-btn">Create Post</button>
+    </form>
+</div>
+{% endblock %}

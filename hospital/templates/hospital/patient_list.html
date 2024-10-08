@@ -1,36 +1,44 @@
-{%  extends 'hospital/main.html' %}
+{% extends 'hospital/main.html' %}
+
+{% block title %}Patient List{% endblock %}
+
 {% load static %}
 {% block content %}
-    <h1>Patient List</h1>
+    <div class="container mt-4">
+        <h1 class="mb-4 text-center">Patient List</h1>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Profile Picture</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Birth Date</th>
-                <th>Gender</th>
-                <th>Email</th>
-                <th>Contact Number</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for patient in patients %}
-            <tr>
-                <td>
-                    {% if patient.profile_pic %}
-                        <img src="{{ patient.profile_pic.url }}" alt="Profile Picture" width="100" height="100">
-                    {% endif %}
-                </td>
-                <td>{{ patient.first_name }}</td>
-                <td>{{ patient.last_name }}</td>
-                <td>{{ patient.date_of_birth }}</td>
-                <td>{{ patient.gender }}</td>
-                <td>{{ patient.email }}</td>
-                <td>{{ patient.contact_number }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+        <table class="table table-bordered table-hover table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Profile Picture</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Birth Date</th>
+                    <th>Gender</th>
+                    <th>Email</th>
+                    <th>Contact Number</th>
+                </tr>
+            </thead>
+            
+            <tbody>
+                {% for patient in patients %}
+                <tr>
+                    <td>
+                        {% if patient.profile_pic %}
+                            <img src="{{ patient.profile_pic.url }}" alt="Profile Picture" class="img-thumbnail" width="80" height="80">
+                        {% else %}
+                            <span>No Image</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ patient.first_name }}</td>
+                    <td>{{ patient.last_name }}</td>
+                    <td>{{ patient.date_of_birth }}</td>
+                    <td>{{ patient.gender }}</td>
+                    <td>{{ patient.email }}</td>
+                    <td>{{ patient.contact_number }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}

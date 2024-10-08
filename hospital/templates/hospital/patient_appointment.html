@@ -1,20 +1,23 @@
-{%  extends 'hospital/main.html' %}
+{% extends 'hospital/main.html' %}
 {% load static %}
+
+{% block title %}Make an Appointment{% endblock %}
+
 {% block content %}
+<div class="container appointment-section">
+    <h1 class="mt-5 mb-4">Book an Appointment</h1>
 
-    <h1>Book an Appointment</h1>
+    <div class="appointment-form mb-5">
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Book Appointment</button>
+        </form>
+    </div>
 
-    <!-- Appointment Booking Form -->
-    <form method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Book Appointment</button>
-    </form>
-
-    <!-- Doctor Information -->
     <h2>Available Doctors and Time Slots</h2>
-    <table>
-        <thead>
+    <table class="table table-bordered table-striped mt-4">
+        <thead class="thead-dark">
             <tr>
                 <th>Doctor Name</th>
                 <th>Specialization</th>
@@ -29,7 +32,6 @@
                 <td>{{ doctor.specialization }}</td>
                 <td>{{ doctor.contact_number }} / {{ doctor.email }}</td>
                 <td>
-                    <!-- Assuming time slots are stored or calculated -->
                     {% if doctor.time_slots %}
                         <ul>
                             {% for slot in doctor.time_slots %}
@@ -37,11 +39,12 @@
                             {% endfor %}
                         </ul>
                     {% else %}
-                        No available slots
+                        <span class="text-danger">No available slots</span>
                     {% endif %}
                 </td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
-{% endblock content %}
+</div>
+{% endblock %}

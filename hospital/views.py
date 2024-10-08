@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
+from django.db.models import Avg
 
 from django.contrib.auth.decorators import login_required
 
@@ -50,7 +51,7 @@ def loginPage(request):
 
 def logoutUser(request):
     logout(request)
-    return redirect('login')
+    return redirect('home')
 
 """
 @login_required(login_url='login')
@@ -62,24 +63,6 @@ def home(request):
     }
     return render(request, 'hospital/index.html', context)
 """
-
-@login_required(login_url = 'login')
-@allowed_users(allowed_roles=['patient'])
-def userPage(request):
-    context = {
-        'is_doctor': request.user.groups.filter(name='doctor').exists(),
-        'is_patient': request.user.groups.filter(name='patient').exists(),
-    }
-    return render(request, 'hospital/user.html', context)
-
-@login_required(login_url = 'login')
-@allowed_users(allowed_roles=['doctor'])
-def doctorPage(request):
-    context = {
-        'is_doctor': request.user.groups.filter(name='doctor').exists(),
-        'is_patient': request.user.groups.filter(name='patient').exists(),
-    }
-    return render(request, 'hospital/doctor.html', context)
 
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['doctor'])
@@ -188,3 +171,77 @@ def contact_page(request):
         'is_patient': request.user.groups.filter(name='patient').exists(),
     }
     return render(request, 'hospital/contact.html', context)
+
+def reviews_page(request):
+    reviews = Review.objects.all()
+    form = ReviewForm()
+    average_rating = reviews.aggregate(Avg('rating'))['rating__avg'] or 0
+    average_rating = round(average_rating, 1)
+    if request.method == 'POST':
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.user = request.user
+            review.save()
+            return redirect('reviews')
+    context = {
+        'reviews': reviews, 
+        'form': form,
+        'is_doctor': request.user.groups.filter(name='doctor').exists(),
+        'is_patient': request.user.groups.filter(name='patient').exists(),
+        'average_rating': average_rating,
+        }
+    return render(request, 'hospital/reviews.html', context)
+
+def blog_list(request):
+    posts = BlogPost.objects.all()
+    context = {
+        'posts': posts,
+        'is_doctor': request.user.groups.filter(name='doctor').exists(),
+        'is_patient': request.user.groups.filter(name='patient').exists(),
+    }
+    return render(request, 'hospital/blog_list.html', context)
+
+def blog_detail(request, post_id):
+    post = get_object_or_404(BlogPost, id=post_id)
+    comments = post.comments.all()
+    if request.method == 'POST':
+        comment_form = CommentForm(request.POST)
+        if comment_form.is_valid():
+            new_comment = comment_form.save(commit=False)
+            new_comment.post = post
+            new_comment.user = request.user
+            new_comment.save()
+            return redirect('blog_detail', post_id=post.id)
+    else:
+        comment_form = CommentForm()
+    context = {
+        'post': post,
+        'comments': comments,
+        'comment_form': comment_form,
+        'is_doctor': request.user.groups.filter(name='doctor').exists(),
+        'is_patient': request.user.groups.filter(name='patient').exists(),
+    }
+    return render(request, 'hospital/blog_detail.html', context)
+
+@login_required
+@allowed_users(allowed_roles=['doctor', 'admin'])
+def new_post(request):
+    if request.user.is_staff or request.user.groups.filter(name='doctor').exists():
+        if request.method == 'POST':
+            form = BlogPostForm(request.POST)
+            if form.is_valid():
+                new_post = form.save(commit=False)
+                new_post.author = request.user
+                new_post.save()
+                return redirect('blog_list')
+        else:
+            form = BlogPostForm()
+        context = {
+            'form': form,
+            'is_doctor': request.user.groups.filter(name='doctor').exists(),
+            'is_patient': request.user.groups.filter(name='patient').exists(),
+        }
+        return render(request, 'hospital/new_post.html', context)
+    else:
+        return redirect('blog_list')

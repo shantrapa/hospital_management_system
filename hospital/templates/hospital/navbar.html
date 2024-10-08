@@ -9,43 +9,87 @@
 </style>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <img src="{% static 'images/logo.png' %}" alt="">
+    <img src="{% static 'images/logo2.png' %}" alt="">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item active">
-          <a class="nav-link" href="{% url 'home' %}">Dashboard</a>
+          <a class="nav-link" href="{% url 'home' %}">
+            <img src="{% static 'images/dashboard.png' %}" alt="Make an appointment" width="20" height="20">
+            Dashboard
+          </a>
         </li>
         {% if request.user.is_staff %}
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'patient_list' %}">Patient list</a>
+              <a class="nav-link" href="{% url 'patient_list' %}">
+                <img src="{% static 'images/list.png' %}" alt="Make an appointment" width="20" height="20">
+                Patient list
+              </a>
             </li>
-            <li class="nav-item">
-              <a class = "nav-link" href={% url 'add_patient' %}>Add patient</a>
-            </li>   
         {% elif is_doctor %} 
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'patient_list' %}">Patient list</a>
+              <a class="nav-link" href="{% url 'patient_list' %}">
+                <img src="{% static 'images/list.png' %}" alt="Make an appointment" width="20" height="20">
+                Patient list
+              </a>
             </li>
             <li class="nav-item">
-              <a class = "nav-link" href={% url 'add_patient' %}>Manage appointments</a>
+              <a class = "nav-link" href={% url 'add_patient' %}>
+                  <img src="{% static 'images/appointment.png' %}" alt="Manage Appointments" width="20" height="20">
+                  Manage appointments
+              </a>
             </li>      
         {% elif is_patient %}
             <li class="nav-item">
-              <a class = "nav-link" href={% url 'account' %}>Settings</a>
+              <a class = "nav-link" href={% url 'account' %}>
+                <img src="{% static 'images/settings.png' %}" alt="Settings" width="20" height="20">
+                Settings
+              </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'patient_appointment' %}">Make an appointment</a>
+              <a class="nav-link" href="{% url 'patient_appointment' %}">
+                <img src="{% static 'images/appointment.png' %}" alt="Make an appointment" width="20" height="20">
+                Make an Appointment
+              </a>
             </li>            
         {% endif %}
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'contact' %}">Contact Us</a>
+          <a class="nav-link" href="{% url 'blog_list' %}">
+            <img src="{% static 'images/blog.png' %}" alt="Blog" width="20" height="20">
+            Blog
+          </a>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'reviews' %}">
+            <img src="{% static 'images/reviews.png' %}" alt="Reviews" width="20" height="20">
+            Reviews
+          </a>
+        </li>        
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'contact' %}">
+            <img src="{% static 'images/contact.png' %}" alt="Contact Us" width="20" height="20">
+            Contact Us
+          </a>
         </li>
       </ul>
     </div>
 
-    <span id="hello-msg">Hello, {{request.user}}</span>
-    <span><a href="{% url 'logout' %}">Logout</a></span>
+    {% if request.user.is_staff or is_doctor or is_patient %}
+        <span id="hello-msg">Hello, {{request.user}}</span>
+        <span><a href="{% url 'logout' %}">
+          <img src="{% static 'images/login.png' %}" alt="Contact Us" width="20" height="20">
+          Logout</a>
+        </span>
+    {% else %}
+      <span>
+        <a href="{% url 'login' %}">
+            <img src="{% static 'images/login.png' %}" alt="Login" width="20" height="20">
+            Log in
+        </a>
+      </span>
+      <span style="margin-left: 20px;">
+        <a href="{% url 'register' %}">Sign Up</a>
+      </span>      
+    {% endif%}
   </nav>
