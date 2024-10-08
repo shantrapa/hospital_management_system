@@ -10,3 +10,35 @@ body {
 #orders-pending{
     background-color: #7cd1c0;
 }
+
+.welcome-section {
+    text-align: center;
+    margin: 50px auto;
+}
+
+.info-section, .additional-info, .contact-info {
+    margin: 20px 0;
+}
+
+ul {
+    list-style-type: disc;
+    margin-left: 20px;
+}
+
+.contact-section {
+    text-align: center;
+    margin: 50px auto;
+}
+
+.contact-form, .contact-details {
+    margin: 20px 0;
+}
+
+.contact-form form {
+    display: inline-block;
+    text-align: left;
+}
+
+.contact-details p {
+    margin: 5px 0;
+}

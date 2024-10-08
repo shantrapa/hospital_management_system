@@ -1,0 +1,24 @@
+{% extends 'hospital/main.html' %}
+{% load static %}
+
+{% block content %}
+<div class="contact-section">
+    <h1>Contact Us</h1>
+    <p>If you have any questions or need assistance, feel free to get in touch with us using the form below or through the provided contact information.</p>
+
+    <div class="contact-form">
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Send Message</button>
+        </form>
+    </div>
+
+    <div class="contact-details">
+        <h2>Our Contact Information:</h2>
+        <p><strong>Email:</strong> info@hospitalmanagement.com</p>
+        <p><strong>Phone:</strong> +1-234-567-890</p>
+        <p><strong>Address:</strong> 123 Healthcare Lane, Medical City, HC 56789</p>
+    </div>
+</div>
+{% endblock %}

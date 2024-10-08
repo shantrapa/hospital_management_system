@@ -1,0 +1,34 @@
+{% extends 'hospital/main.html' %}
+{% load static %}
+
+{% block content %}
+<div class="welcome-section">
+    <h1>Welcome to Our Hospital Management System</h1>
+    <p>Our system is designed to streamline the interaction between patients, doctors, and hospital staff, making healthcare management more efficient and accessible.</p>
+
+    <div class="info-section">
+        <h2>Key Features:</h2>
+        <ul>
+            <li>Book appointments with ease for both patients and doctors</li>
+            <li>View and manage patient information securely</li>
+            <li>Doctors can update the status of patient appointments</li>
+            <li>Personalized dashboard for doctors and patients</li>
+            <li>Secure management of medical data and patient profiles</li>
+        </ul>
+    </div>
+
+    <div class="additional-info">
+        <h2>Benefits:</h2>
+        <p>Our hospital management system helps both patients and doctors to efficiently manage medical appointments, access patient records, and stay informed about scheduled appointments.</p>
+        <ul>
+            <li><strong>For Patients:</strong> Easily book appointments, view upcoming appointments, and manage your personal medical profile.</li>
+            <li><strong>For Doctors:</strong> Manage patient appointments, update medical statuses, and view patient records in one convenient dashboard.</li>
+        </ul>
+    </div>
+
+    <div class="contact-info">
+        <h2>Contact Us</h2>
+        <p>If you have any questions or need assistance, feel free to <a href="{% url 'contact' %}">contact us</a>.</p>
+    </div>
+</div>
+{% endblock %}

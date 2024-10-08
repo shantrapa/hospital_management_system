@@ -16,8 +16,15 @@
                         <option value="Completed" {% if appointment.status == "Completed" %}selected{% endif %}>Completed</option>
                     </select>
                     <button type="submit">Update Status</button>
-                </form>
-            </li>
+                </form>              
+            </li> 
         {% endfor %}
     </ul>
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %} 
 {% endblock content %}

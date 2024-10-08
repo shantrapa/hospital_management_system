@@ -2,9 +2,35 @@
 {% load static %}
 {% block content %}
     <h1>Patient List</h1>
-    <ul>
-        {% for patient in patients %}
-            <li>{{ patient.first_name }} {{ patient.last_name }}</li>
-        {% endfor %}
-    </ul>    
-{% endblock content %}
+
+    <table>
+        <thead>
+            <tr>
+                <th>Profile Picture</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Birth Date</th>
+                <th>Gender</th>
+                <th>Email</th>
+                <th>Contact Number</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for patient in patients %}
+            <tr>
+                <td>
+                    {% if patient.profile_pic %}
+                        <img src="{{ patient.profile_pic.url }}" alt="Profile Picture" width="100" height="100">
+                    {% endif %}
+                </td>
+                <td>{{ patient.first_name }}</td>
+                <td>{{ patient.last_name }}</td>
+                <td>{{ patient.date_of_birth }}</td>
+                <td>{{ patient.gender }}</td>
+                <td>{{ patient.email }}</td>
+                <td>{{ patient.contact_number }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

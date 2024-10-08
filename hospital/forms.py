@@ -2,6 +2,7 @@ from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
+from django.core.validators import EmailValidator
 from .models import *
 
 class PatientForm(ModelForm):
@@ -42,3 +43,7 @@ class CreateUserForm(UserCreationForm):
         model = User
         fields = ['username', 'email', 'password1', 'password2']
 
+class ContactForm(forms.Form):
+    name = forms.CharField(max_length=100, required=True)
+    email = forms.EmailField(validators=[EmailValidator()], required=True)  
+    message = forms.CharField(widget=forms.Textarea, required=True)

@@ -4,9 +4,18 @@ from django.contrib import messages
 
 from django.contrib.auth.decorators import login_required
 
+from django.core.mail import EmailMessage, send_mail
+
 from .models import *
 from .forms import *
 from .decorators import *
+
+def home(request):
+    context = {
+        'is_doctor': request.user.groups.filter(name='doctor').exists(),
+        'is_patient': request.user.groups.filter(name='patient').exists(),
+    }
+    return render(request, 'hospital/home.html', context)
 
 @unauthenticated_user
 def registerPage(request):
@@ -43,19 +52,23 @@ def logoutUser(request):
     logout(request)
     return redirect('login')
 
+"""
 @login_required(login_url='login')
 @admin_only
 def home(request):
     context = {
         'is_doctor': request.user.groups.filter(name='doctor').exists(),
+        'is_patient': request.user.groups.filter(name='patient').exists(),
     }
     return render(request, 'hospital/index.html', context)
+"""
 
 @login_required(login_url = 'login')
 @allowed_users(allowed_roles=['patient'])
 def userPage(request):
     context = {
         'is_doctor': request.user.groups.filter(name='doctor').exists(),
+        'is_patient': request.user.groups.filter(name='patient').exists(),
     }
     return render(request, 'hospital/user.html', context)
 
@@ -64,6 +77,7 @@ def userPage(request):
 def doctorPage(request):
     context = {
         'is_doctor': request.user.groups.filter(name='doctor').exists(),
+        'is_patient': request.user.groups.filter(name='patient').exists(),
     }
     return render(request, 'hospital/doctor.html', context)
 
@@ -73,7 +87,9 @@ def patient_list(request):
     patients = Patient.objects.all()
     context = {
         'patients': patients, 
-        'is_doctor': request.user.groups.filter(name='doctor').exists(),}
+        'is_doctor': request.user.groups.filter(name='doctor').exists(),
+        'is_patient': request.user.groups.filter(name='patient').exists(),
+    }
     return render(request, 'hospital/patient_list.html', context)
 
 @login_required(login_url='login')
@@ -84,6 +100,7 @@ def add_patient(request):
         context = {
             'appointments': appointments,
             'is_doctor': request.user.groups.filter(name='doctor').exists(),
+            'is_patient': request.user.groups.filter(name='patient').exists(),
         }
         return render(request, 'hospital/add_patient.html', context)
     else:
@@ -108,6 +125,7 @@ def patient_appointment(request):
         'form': form, 
         'doctors': doctors,
         'is_doctor': request.user.groups.filter(name='doctor').exists(),
+        'is_patient': request.user.groups.filter(name='patient').exists(),
     }
     return render(request, 'hospital/patient_appointment.html', context)
     
@@ -125,15 +143,48 @@ def accountSettings(request):
 	context = {
         'form': form,
         'is_doctor': request.user.groups.filter(name='doctor').exists(),
+        'is_patient': request.user.groups.filter(name='patient').exists(),
     }
 	return render(request, 'hospital/account_settings.html', context)
 
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['doctor'])
 def update_appointment_status(request, appointment_id):
     if request.method == 'POST':
         appointment = get_object_or_404(Appointment, id=appointment_id)
         new_status = request.POST.get('status')
         appointment.status = new_status
         appointment.save()
-        return redirect('add_patient')  # Redirect to the page where appointments are listed
+        messages.success(request, 'Appointment status updated successfully!')
+        return redirect('add_patient')
 
     return render(request, 'hospital/add_patient.html')
+
+def contact_page(request):
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            email = form.cleaned_data['email']
+            message = form.cleaned_data['message']
+
+            send_mail(
+                f'Contact Form Submission from {name}',
+                message,
+                email,
+                ['info@hospitalmanagement.com'], 
+                fail_silently=False,
+            )
+            
+            return render(request, 'hospital/contact.html', {
+                'form': form,
+                'success_message': 'Thank you for contacting us! We will get back to you soon.'
+            })
+    else:
+        form = ContactForm()
+    context = {
+        'form': form,
+        'is_doctor': request.user.groups.filter(name='doctor').exists(),
+        'is_patient': request.user.groups.filter(name='patient').exists(),
+    }
+    return render(request, 'hospital/contact.html', context)
