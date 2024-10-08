@@ -34,7 +34,7 @@ def admin_only(view_func):
         if group == 'admin':
             return view_func(request, *args, **kwargs)
         if group == 'patient':
-            return redirect('user-page')
+            return redirect('home')
         if group == 'doctor':
-            return redirect('doctor-page')
+            return redirect('home')
     return wrapper_func
